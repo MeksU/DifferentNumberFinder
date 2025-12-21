@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "appBarTitle": "Different Number Finder",
+  "search": "Search",
+  "inputLabel": "Enter integers separated by commas",
+  "inputHint": "e.g. 2,4,0,100,4,11,2602,36",
+  "resultAppBarTitle": "Result",
+  "invalidInputException": "Use comma-separated integers",
+  "tooFewNumbersException": "Enter at least 3 numbers",
+  "noDifferentFoundException": "No outlier found in the given set",
+  "unknownException": "Unknown error"
+}

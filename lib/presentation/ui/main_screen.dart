@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/logic/exception_handler.dart';
-import 'result_screen.dart';
-import '../logic/different_finder.dart';
-import '../logic/input_parser.dart';
+import 'package:provider/provider.dart';
+import '../../l10n/app_localizations.dart';
+import '../providers/different_number_provider.dart';
+import '../util/exception_l10n.dart';
+import 'package:go_router/go_router.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,33 +15,29 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _controller = TextEditingController();
 
-  void _search() {
-    try {
-      final parsedNumbers = InputParser.parse(_controller.text);
-      final result = DifferentFinder.find(parsedNumbers);
+  void _search(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final provider = context.read<DifferentNumberProvider>();
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ResultScreen(result: result),
-        ),
-      );
-    } on ExceptionHandler catch (e) {
+    provider.search(_controller.text);
+
+    if (provider.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message)),
+        SnackBar(content: Text(provider.error!.exceptionMessage(l10n))),
       );
-    } catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Nieznany błąd aplikacji')),
-      );
+      return;
     }
+
+    context.push('/result');
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Wykrywacz wartości odstającej"),
+        title: Text(l10n.appBarTitle),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -56,17 +53,17 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   TextField(
                     controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Wpisz liczby całkowite po przecinkach',
-                      hintText: '10, 20, 10, 30, 20, 5, 4, 100 ...',
+                    decoration: InputDecoration(
+                      labelText: l10n.inputLabel,
+                      hintText: l10n.inputHint,
                       border: OutlineInputBorder()
                     ),
-                    onSubmitted: (_) => _search()
+                    onSubmitted: (_) => _search(context)
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: _search,
-                    child: const Text('Wyszukaj'),
+                    onPressed: () => _search(context),
+                    child: Text(l10n.search),
                   ),
                 ],
               ),

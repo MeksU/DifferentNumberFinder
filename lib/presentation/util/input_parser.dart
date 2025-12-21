@@ -1,7 +1,7 @@
-import 'exception_handler.dart';
+import '../../domain/exceptions/exception_handler.dart';
 
 class InputParser {
-  static List<int> parse(String input) {
+  List<int> parse(String input) {
     try {
       final numbers = input
           .split(',')

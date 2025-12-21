@@ -1,0 +1,12 @@
+{
+  "@@locale": "pl",
+  "appBarTitle": "Wyszukiwanie wartości odstającej",
+  "search": "Wyszukaj",
+  "inputLabel": "Wpisz liczby całkowite po przecinkach",
+  "inputHint": "np. 2,4,0,100,4,11,2602,36",
+  "resultAppBarTitle": "Wynik",
+  "invalidInputException": "Użyj liczb całkowitych oddzielonych przecinkami",
+  "tooFewNumbersException": "Podaj co najmniej 3 liczby",
+  "noDifferentFoundException": "Brak wartości odstającej w podanym zbiorze",
+  "unknownException": "Nieznany błąd"
+}

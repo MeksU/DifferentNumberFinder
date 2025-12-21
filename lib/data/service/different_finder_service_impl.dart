@@ -1,7 +1,9 @@
-import 'exception_handler.dart';
+import '../../domain/service/different_finder_service.dart';
+import '../../domain/exceptions/exception_handler.dart';
 
-class DifferentFinder {
-  static int find(List<int> numbers) {
+class DifferentFinderServiceImpl implements DifferentFinderService {
+  @override
+  int find(List<int> numbers) {
     if (numbers.length < 3) {
       throw const TooFewNumbersException();
     }
